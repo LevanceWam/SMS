@@ -1,5 +1,5 @@
 <section class= "register">
-  <form name="RegiForm"
+  <form name="regiform"
   ng-submit="register()"
   novalidate>
 
@@ -10,6 +10,33 @@
     </div>
 
     <fieldset>
+      <input type="text" name="firstname" placeholder="Firstname"
+      ng-model="user.firstname" ng-required="true">
+      <p class= "error validationerror"
+      ng-show="regiform.firstname.$invalid && regiform.firstname.$touched">
+      You have to have a name to win</p>
 
+      <input type="text" name="lastname" placeholder="Lastname"
+      ng-model="user.lastname" ng-required="true">
+      <p class= "error validationerror"
+      ng-show="regiform.lastname.$invalid && regiform.lastname.$touched">
+      We need a last name</p>
+
+      <input type="email" name="email" placeholder="Your Email"
+      ng-model="user.email" ng-required="true">
+      <p class= "error validationerror"
+      ng-show="regiform.email.$invalid && regiform.email.$touched">
+      Please use a correct one</p>
+
+      <input type="password" name="password" placeholder="Password"
+      ng-model="user.password" ng-required="true">
+      <p class= "error validationerror"
+      ng-show="regiform.password.$invalid && regiform.email.$touched">
+      Really</p>
+    </fieldset>
+
+    <button type="submit" class="btn"
+    ng-disabled="regiform.$invalid">Signup!</button>
+    <p>or <a ng-href="#/login">login</a></p>
   </form>
 </section>
