@@ -21,12 +21,12 @@
       ng-model="user.password" ng-required="true">
       <p class= "error validationerror"
       ng-show="regiform.password.$invalid && regiform.email.$touched">
-      We need a last name</p>
+      Please type in your password</p>
 
     </fieldset>
 
     <button type="submit" class="btn"
-    ng-disabled="regiform.$invalid">Signup!</button>
-    <p>or <a ng-href="#/register">login</a></p>
+    ng-disabled="regiform.$invalid">Login</button>
+    <p>or <a ng-href="#/register">Sign up!</a></p>
   </form>
 </section>

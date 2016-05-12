@@ -1,15 +1,15 @@
 drawApp.factory('Authentication',
-['$rootScope','$firebaseAuth','$firebaseObject',
-'$location','FIREBASE_URL',
-function($rootScope, $firebaseAuth, $firebaseObject,
-$location, FIREBASE_URL) {
+  ['$rootScope', '$firebaseAuth', '$firebaseObject',
+  '$location', 'FIREBASE_URL',
+  function($rootScope, $firebaseAuth, $firebaseObject,
+    $location, FIREBASE_URL) {
 
   var ref = new Firebase(FIREBASE_URL);
   var auth = $firebaseAuth(ref);
 
-  auth.$onAuth(function(authUser){
-    if(authUser) {
-      var userRef = new Firebase(FIREBASE_URL+ 'users/' + authUser.uid);
+  auth.$onAuth(function(authUser) {
+    if (authUser) {
+      var userRef = new Firebase(FIREBASE_URL + 'users/' + authUser.uid );
       var userObj = $firebaseObject(userRef);
       $rootScope.currentUser = userObj;
     } else {
@@ -17,47 +17,49 @@ $location, FIREBASE_URL) {
     }
   });
 
-  var theUser = {
+
+  var myObject = {
     login: function(user) {
       auth.$authWithPassword({
-        email:user.email,
+        email: user.email,
         password: user.password
-      }).then(function (regUser){
+      }).then(function(regUser) {
         $location.path('/draw');
-      }).catch(function(error){
-        $rootScope.message = error.message;
+      }).catch(function(error) {
+       $rootScope.message = error.message;
       });
-    },//end of login
+    },
 
-    logout: function(){
+    logout: function() {
+      return auth.$unauth();
+    },
+
+    requireAuth: function() {
       return auth.$requireAuth();
-    },// end of log out
+    },
 
-    requireAuth: function (){
-      return auth.$requireAuth();
-    },//end of requireAuth
-
-    register:function(user){
+    register: function(user) {
       auth.$createUser({
-        email:user.email,
-        password:user.password
-      }).then(function(regUser){
-          var regRef = new Firebase(FIREBASE_URL + 'users')
-          .child(regUser.uid).set({
-            date: Firebase.ServerValue.TIMESTAMP,
-            regUser: regUser.uid,
-            firstname: user.firstname,
-            lastname: user.lastname,
-            email: user.email
-          }); // end of the user
+        email: user.email,
+        password: user.password
+      }).then(function(regUser) {
 
-          theUser.login(user);
-      }).catch(function(error){
+        var regRef = new Firebase(FIREBASE_URL + 'users')
+        .child(regUser.uid).set({
+          date: Firebase.ServerValue.TIMESTAMP,
+          regUser: regUser.uid,
+          firstname: user.firstname,
+          lastname: user.lastname,
+          email:  user.email
+        });
+
+        myObject.login(user);
+
+      }).catch(function(error) {
         $rootScope.message = error.message;
       });
-    }//end of register
+    }
   };
 
-  return theUser;
-
-}]);// factory end
+  return myObject;
+}]); //factory end
