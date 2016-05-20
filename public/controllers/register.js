@@ -1,6 +1,4 @@
-drawApp.controller('RegiController',
-  ['$scope', 'Authentication',
-  function($scope, Authentication) {
+drawApp.controller('RegiController', ["$scope", "Authentication", function($scope, Authentication) {
 
   $scope.login = function() {
     Authentication.login($scope.user);
