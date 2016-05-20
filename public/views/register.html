@@ -10,12 +10,15 @@
     </div>
 
     <fieldset>
-      <input type="text" name="firstname" placeholder="Firstname"
-      ng-model="user.firstname" ng-required="true">
-      <p class= "error validationerror"
-      ng-show="regiform.firstname.$invalid && regiform.firstname.$touched">
-      You have to have a name to win</p>
+      <div class="form-group">
+        <input type="text" name="firstname" placeholder="Firstname"
+        ng-model="user.firstname" ng-required="true">
+        <p class= "error validationerror"
+        ng-show="regiform.firstname.$invalid && regiform.firstname.$touched">
+        You have to have a name to win</p>
+    </div>
 
+    
       <input type="text" name="lastname" placeholder="Lastname"
       ng-model="user.lastname" ng-required="true">
       <p class= "error validationerror"
