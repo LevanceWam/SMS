@@ -1,6 +1,6 @@
 drawApp.controller('DrawController', function($scope, $rootScope, $firebaseAuth, $firebaseArray, FIREBASE_URL) {
     $(document).ready(function () {
-      var pixSize = 8, lastPoint = null, currentColor = "000", mouseDown = 0;
+      var pixelSize = 8, lastPoint = null, currentColor = "000", mouseDown = 0;
 
       var pixelDataRef = new Firebase('https://drawingappli.firebaseio-demo.com/');
 
@@ -13,7 +13,7 @@ drawApp.controller('DrawController', function($scope, $rootScope, $firebaseAuth,
 
       var colors = ["fff","045","600","080","00f","830","f2d","f5f","ft5","f90","7f8","cy0","089","408","ff8","8ff"];
       for (c in colors) {
-        var item = $('<div/>').css("background-color", '#' + colors[c]).addClass("colorbox");
+        var item = $('<div/>').css("background-color", '#' + colors[c]).addClass("colorpicker");
         item.click((function () {
           var col = colors[c];
           return function () {
@@ -34,8 +34,8 @@ drawApp.controller('DrawController', function($scope, $rootScope, $firebaseAuth,
         e.preventDefault();
 
         var offset = $('canvas').offset();
-        var x1 = Math.floor((e.pageX - offset.left) / pixSize - 1),
-          y1 = Math.floor((e.pageY - offset.top) / pixSize - 1);
+        var x1 = Math.floor((e.pageX - offset.left) / pixelSize - 1),
+          y1 = Math.floor((e.pageY - offset.top) / pixelSize - 1);
         var x0 = (lastPoint == null) ? x1 : lastPoint[0];
         var y0 = (lastPoint == null) ? y1 : lastPoint[1];
         var dx = Math.abs(x1 - x0), dy = Math.abs(y1 - y0);
@@ -63,11 +63,11 @@ drawApp.controller('DrawController', function($scope, $rootScope, $firebaseAuth,
       var pixelDraw = function(snapshot) {
         var coordinates = snapshot.key().split(":");
         myContext.fillStyle = "#" + snapshot.val();
-        myContext.fillRect(parseInt(coordinates[0]) * pixSize, parseInt(coordinates[1]) * pixSize, pixSize, pixSize);
+        myContext.fillRect(parseInt(coordinates[0]) * pixelSize, parseInt(coordinates[1]) * pixelSize, pixelSize, pixelSize);
       };
       var clearPixel = function(snapshot) {
         var coordinates = snapshot.key().split(":");
-        myContext.clearRect(parseInt(coordinates[0]) * pixSize, parseInt(coordinates[1]) * pixSize, pixSize, pixSize);
+        myContext.clearRect(parseInt(coordinates[0]) * pixelSize, parseInt(coordinates[1]) * pixelSize, pixelSize, pixelSize);
       };
       pixelDataRef.on('child_added', pixelDraw);
       pixelDataRef.on('child_changed', pixelDraw);
