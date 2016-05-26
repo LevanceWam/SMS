@@ -1,4 +1,4 @@
-drawApp.controller('DrawController', function($scope, $rootScope, $firebaseAuth, $firebaseArray, FIREBASE_URL) {
+drawApp.controller('DrawController',[ '$scope', '$rootScope', '$firebaseAuth', '$firebaseArray','$firebaseObject', 'FIREBASE_URL', function($scope, $rootScope, $firebaseAuth, $firebaseArray, FIREBASE_URL, $firebaseObject) {
     $(document).ready(function () {
       var pixelSize = 8, lastPoint = null, currentColor = "000", mouseDown = 0;
 
@@ -73,4 +73,17 @@ drawApp.controller('DrawController', function($scope, $rootScope, $firebaseAuth,
       pixelDataRef.on('child_changed', pixelDraw);
       pixelDataRef.on('child_removed', clearPixel);
     });
-}); // Controller
+    var ref = new Firebase("https://drawingappli.firebaseio.com/");
+            $scope.messages = $firebaseArray(ref);
+           $scope.addMessage = function(e) {
+              $scope.sendMsg = function() {
+
+                     $scope.messages.$add($scope.msg);
+                     $scope.msg.body = "";
+
+                   }
+           }
+           $scope.clear = function(){
+             $scope.name = "";
+           }
+}]); // Controller

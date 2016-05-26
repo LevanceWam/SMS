@@ -2,3 +2,24 @@
   <canvas id="drawingboard" width="880" height="820"></canvas>
 </div>
 <div id="pixelColor"></div>
+
+<div id="chat" >
+
+  <li ng-repeat="msg in messages">
+{{currentUser.firstname}} says: {{msg.body}}
+</li>
+
+
+</div>
+
+<div class="form-group">
+  <input type="text" name="text" placeholder="Your Answer"
+  ng-model="msg.body" ng-keydown="addMessage($event)" >
+
+</div>
+
+
+
+
+<button type="submit" class="btn btn-primary"
+ ng-click="sendMsg()">Send</button>
